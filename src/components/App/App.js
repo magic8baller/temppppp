@@ -11,7 +11,7 @@ const currentUser = Spotify.getUserInfo()
 class App extends Component {
   state = {
     searchResults: [],
-    playlistName: 'My New Playlist',
+    playlistName: 'Name Your Playlist Here',
     playlistTracks: [],
     currentUser: null
   }
@@ -40,7 +40,7 @@ class App extends Component {
     const trackUris = this.state.playlistTracks.map(track => track.uri)
     Spotify.savePlaylist(this.state.playlistName, trackUris).then(() => {
       this.setState({
-        playlistName: 'My New Playlist',
+        playlistName: 'Name Your New Playlist!',
         playlistTracks: []
       })
     })

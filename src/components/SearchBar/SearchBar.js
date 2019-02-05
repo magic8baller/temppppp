@@ -1,5 +1,5 @@
 import React from 'react'
-import './SearchBar.css'
+import './SearchBar.scss'
 
 class SearchBar extends React.Component {
   state = {
@@ -37,14 +37,28 @@ class SearchBar extends React.Component {
   render() {
     return (
       <div className="SearchBar">
-        <input
-          placeholder="Enter A Song, Album, or Artist"
-          onChange={this.handleTermChange}
-          onKeyUp={this.handleEnterKey}
-          onFocus={this.handleOnFocus}
-          onBlur={this.handleOnBlur}
-        />
-        <a onClick={this.search}>SEARCH</a>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="jumbotron text-center" />
+            <h2 className="bar">Start searching for artists here</h2>
+
+            <div className="col-md-6 col-md-offset-3">
+              <div className="input-group input-group-lg" />
+              <input
+                placeholder="Enter A Song, Album, or Artist"
+                onChange={this.handleTermChange}
+                onKeyUp={this.handleEnterKey}
+                onFocus={this.handleOnFocus}
+                onBlur={this.handleOnBlur}
+              />
+
+              <br />
+              <a className="btn" onClick={this.search}>
+                SEARCH
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

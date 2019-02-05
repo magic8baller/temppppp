@@ -21,6 +21,7 @@
   flex-direction: column;
   justify-content: center;
   height: 72px;
+  padding: 1rem;
 }
 
 .track-info h3 {
