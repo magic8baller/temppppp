@@ -5,10 +5,13 @@ let accessToken
 const API_URL = 'https://api.spotify.com/v1'
 
 const Spotify = {
+  //TODO: MOVE TO ADAPTER
   getAccessToken() {
     if (accessToken) {
       return accessToken
     }
+
+    //THIS GOES IN
     const scopes =
       'user-read-playback-state user-modify-playback-state playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private user-follow-modify user-follow-read user-library-read user-library-modify   user-read-private user-read-birthdate user-read-email user-top-read'
     const urlAccessToken = window.location.href.match(/access_token=([^&]*)/)
@@ -23,11 +26,16 @@ const Spotify = {
       window.location = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=${scopes}&redirect_uri=${redirectURI}`
     }
   },
+
   //current user
   getUserInfo() {
     const accessToken = Spotify.getAccessToken()
     let user
+
+    //TODO: MOVE FETCHES TO ADAPTER
+    //TODO: CONSTANTS - BASE
     return fetch(`${API_URL}/me`, {
+      //: HEADERS()
       headers: { Authorization: `Bearer ${accessToken}` }
     })
       .then(res => res.json())
@@ -71,11 +79,12 @@ const Spotify = {
     if (!name || !trackUris.length) {
       return
     }
-
+    //TODO: MOVE TO ADAPTER!
     const accessToken = Spotify.getAccessToken()
     const headers = { Authorization: `Bearer ${accessToken}` }
     let userId
 
+    //TODO: ADAPTER
     return fetch(`${API_URL}/me`, { headers: headers })
       .then(res => res.json())
       .then(jsonRes => {

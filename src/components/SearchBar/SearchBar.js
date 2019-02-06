@@ -30,7 +30,7 @@ class SearchBar extends React.Component {
   handleOnBlur = event => {
     let input = event.target
     if (!input.value) {
-      input.setAttribute('placeholder', 'Enter A Song, Album, or Artist')
+      input.value = 'Enter A Song, Album, or Artist'
     }
   }
 
