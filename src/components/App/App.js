@@ -6,14 +6,33 @@ import SearchBar from '../SearchBar/SearchBar'
 import SearchResults from '../SearchResults/SearchResults'
 import Playlist from '../Playlist/Playlist'
 import Home from '../Home/Home'
+import {
+  checkUrlForSpotifyAccessToken,
+  hashParams
+} from '../../services/SpotifyFunctions'
+import spot from '../../services/spot'
+import SpotifyWebApi from 'spotify-web-api-js'
 
-const currentUser = Spotify.getUserInfo()
+const spotifyApi = new SpotifyWebApi()
 class App extends Component {
   state = {
     searchResults: [],
     playlistName: 'Name Your Playlist Here',
     playlistTracks: [],
-    currentUser: null
+    currentUser: null,
+    accessToken: '',
+    loggedIn: false
+  }
+
+  componentDidMount() {
+    const accessToken = checkUrlForSpotifyAccessToken()
+    fetch('https://www.spotify.com/api/v1/me', {
+      Authorization: `Bearer: ${accessToken}`
+    })
+      .then(r => r.json())
+      .then(currentUser => {
+        this.setState({ currentUser, loggedIn: true, accessToken: accessToken })
+      })
   }
 
   addTrack = track => {
@@ -46,14 +65,12 @@ class App extends Component {
     })
   }
 
-  search = term => {
-    Spotify.search(term).then(searchResults => {
-      this.setState({ searchResults })
+  search = query => {
+    const accessToken = checkUrlForSpotifyAccessToken()
+    spotifyApi.setAccessToken(accessToken)
+    spotifyApi.searchTracks(query).then(trackData => {
+      this.setState({ trackData })
     })
-  }
-
-  currentUser = () => {
-    this.setState({ currentUser })
   }
 
   render() {
