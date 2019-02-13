@@ -1,19 +1,35 @@
 import React, { Component } from 'react'
 import './App.css'
 
-import Spotify from '../../services/Spotify'
+// import Spotify from '../../services/Spotify'
 import SearchBar from '../SearchBar/SearchBar'
 import SearchResults from '../SearchResults/SearchResults'
 import Playlist from '../Playlist/Playlist'
 import Home from '../Home/Home'
+import Spotify from 'spotify-web-api-js'
 
-const currentUser = Spotify.getUserInfo()
+const spotifyApi = new Spotify()
+
 class App extends Component {
   state = {
     searchResults: [],
     playlistName: 'Name Your Playlist Here',
     playlistTracks: [],
-    currentUser: null
+    currentUser: {
+      display_name: '',
+      images: ''
+    },
+    accessToken: ''
+  }
+
+  async componentDidMount() {
+    await spotifyApi.setAccessToken(this.props.accessToken)
+    await spotifyApi.getMe().then(currentUser => {
+      this.setState({ currentUser, accessToken: this.props.accessToken })
+    })
+    console.log(this.state.currentUser)
+    // const playlists = await SpotifyFunctions.getUserPlaylists();
+    // this.setState({playlists: playlists});
   }
 
   addTrack = track => {
@@ -52,18 +68,15 @@ class App extends Component {
     })
   }
 
-  currentUser = () => {
-    this.setState({ currentUser })
-  }
-
   render() {
     return (
       <div>
-        <h1>spottifrenz</h1>
+        <h1>{this.state.currentUser.display_name}'s spottifrenz</h1>
         <div className="App">
           <button>
             <a href={Home}>view profile!</a>
           </button>
+          {/* <div>{this.state.currentUser.display_name}</div> */}
           <SearchBar onSearch={this.search} />
           <div className="App-playlist">
             <SearchResults

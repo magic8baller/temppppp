@@ -1,39 +1,46 @@
 import React, { Component } from 'react'
+// import './SpotifyContainer.css'
+import Paper from '@material-ui/core/Paper'
+import ConnectSpotify from '../ConnectSpotify'
 
-export default class Home extends Component {
+import * as SpotifyFunctions from '../spotifyFunctions'
+import App from '../App/App'
+
+// import Spotify from 'spotify-web-api-js'
+// const spotifyApi = new Spotify()
+class SpotifyContainer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      loggedInToSpotify: false,
+      accessToken: null
+    }
+  }
+
+  componentDidMount() {
+    //will check URL for accessToken hash. If it's not there, it will show the connect-spotify-button as a link
+    //which will then redirect back to your site with the hash. If there is a hash, then we will jump right into the player
+    const accessToken = SpotifyFunctions.checkUrlForSpotifyAccessToken()
+    if (accessToken) {
+      this.setState({ loggedInToSpotify: true, accessToken: accessToken })
+    } else {
+      this.setState({ loggedInToSpotify: false, accessToken: null })
+    }
+  }
+
   render() {
-    const { id, display_name, image, href } = this.props
-    console.log('props are', this.props)
     return (
-      <div>
-        <h2>{`Logged in as ${display_name}`}</h2>
-        <div className="user-content">
-          <img src={image} alt={image} />
-          <ul>
-            <li>
-              <span>Display name</span>
-              <span>{display_name}</span>
-            </li>
-            <li>
-              <span>Id</span>
-              <span>{id}</span>
-            </li>
-
-            <li>
-              <span>Link</span>
-              <span>
-                <a href={href}>{href}</a>
-              </span>
-            </li>
-            <li>
-              <span>Profile Image</span>
-              <span>
-                <a href={image}>{image}</a>
-              </span>
-            </li>
-          </ul>
-        </div>
+      <div className="SpotifyContainer">
+        <Paper>
+          {!this.state.loggedInToSpotify ? (
+            <ConnectSpotify />
+          ) : (
+            <App accessToken={this.state.accessToken} />
+          )}
+        </Paper>
       </div>
     )
   }
 }
+
+export default SpotifyContainer
