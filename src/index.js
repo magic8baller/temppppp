@@ -13,6 +13,7 @@ const routing = (
       {'               '}
       <Link to="/">Home</Link>{' '}
       <a href="https://open.spotify.com/collection/playlists">Spotify</a>
+      <a href="window.location='http://www.spotify.com/logout'">LogOut</a>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/profile" component={App} />

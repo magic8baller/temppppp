@@ -79,6 +79,7 @@ class App extends Component {
     )
   }
   savePlaylist = (token, name, trackUris) => {
+    console.log('saving pl')
     return sp.savePlaylist(token, name, trackUris)
   }
   search = term => {
@@ -93,15 +94,19 @@ class App extends Component {
     const { username, avatar, href } = this.state.currentUser
     return (
       <div>
-        <h1>
-          <span>
-            <img src={avatar} />
-          </span>
-          {username}'s spottifrenz
-        </h1>
+        <div className="clearfix">
+          <h1>
+            <span>
+              <img className="avatar" src={avatar} width="60" height="60" />
+            </span>
+            {username}'s spottifrenz
+          </h1>
+        </div>
         <div className="App">
           <button>
-            <a href={href}>view profile!</a>
+            <a href="https://open.spotify.com/collection/playlists">
+              view profile!
+            </a>
           </button>
 
           <SearchBar onSearch={this.search} />

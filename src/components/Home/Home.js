@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-// import './SpotifyContainer.css'
+
 import Paper from '@material-ui/core/Paper'
 import ConnectSpotify from '../ConnectSpotify'
-// import PlaylistChooser from '../PlaylistChooser'
+
 import * as SpotifyFunctions from '../spotifyFunctions'
 import App from '../App/App'
 
-// import Spotify from 'spotify-web-api-js'
-// import PlaylistChooser from '../PlaylistChooser';
-// const spotifyApi = new Spotify()
+import Spotify from 'spotify-web-api-js'
+
+const spotifyApi = new Spotify()
 class SpotifyContainer extends Component {
   state = {
     loggedInToSpotify: false,

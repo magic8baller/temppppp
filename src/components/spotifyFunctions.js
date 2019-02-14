@@ -1,7 +1,5 @@
 import Spotify from 'spotify-web-api-js'
-// import uniq from 'lodash.uniq'
-// import flatten from 'lodash.flatten'
-// import chunk from 'lodash.chunk'
+
 const API_URL = 'https://api.spotify.com/v1'
 const spotifyApi = new Spotify()
 

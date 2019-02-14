@@ -4,12 +4,11 @@ const sp = {
     if (!name || !trackUris.length) {
       return
     }
-    //TODO: MOVE TO ADAPTER!
+
     const accessToken = token
     const headers = { Authorization: `Bearer ${token}` }
     let userId
 
-    //TODO: ADAPTER
     return fetch(`${API_URL}/me`, { headers: headers })
       .then(res => res.json())
       .then(jsonRes => {
