@@ -2,16 +2,12 @@ import React from 'react'
 import './Track.css'
 
 class Track extends React.Component {
-  // renderAction(){
-  //   if (this.props.isRemoved) {
-  //     return (<a className="Track-action" onClick={this.removeTrack}>-</a>);
-  //   } else {
-  //     return (<a className="Track-action" onClick={this.addTrack}>+</a>);
-  //   }
-  // }
-
   addTrack = () => {
     this.props.onAdd(this.props.track)
+  }
+
+  playTrack = () => {
+    this.props.onPlay(this.props.track)
   }
 
   removeTrack = () => {
@@ -26,6 +22,7 @@ class Track extends React.Component {
           <p>
             {this.props.track.artist} | {this.props.track.album}
           </p>
+          <button onClick={this.props.track.previewUrl}>play track</button>
         </div>
         <a
           className="Track-action"

@@ -1,18 +1,24 @@
 import React, { Component } from 'react'
-// import './ConnectSpotify.css'
+import './ConnectSpotify.css'
 import * as SpotifyFunctions from './spotifyFunctions.js'
 
 class ConnectSpotify extends Component {
   render() {
     return (
-      <div className="ConnectSpotify">
-        <button
-          onClick={() => {
-            window.location = 'http://localhost:3001/login'
-          }}
-        >
-          Connect to Spotify
-        </button>
+      <div>
+        <div>
+          <div class="hero" />
+          <div class="button__outer">
+            <button
+              className="button button--spotify"
+              onClick={() => {
+                window.location = 'http://localhost:3001/login'
+              }}
+            >
+              Connect
+            </button>
+          </div>
+        </div>
       </div>
     )
   }

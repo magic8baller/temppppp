@@ -1,0 +1,48 @@
+.topnav {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.6);
+  overflow: hidden;
+  height: 70px;
+}
+
+topnav p {
+  float: left;
+  display: block;
+  color: #000;
+  text-align: center;
+  padding: 25px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.topnav p:hover {
+  color: #6a6ac8;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #000;
+  text-align: center;
+  padding: 25px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  color: #6a6ac8;
+}
+
+.topnav .icon {
+  display: none;
+}
+.avatar {
+  background-image: none;
+}
+.avatar-logout {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

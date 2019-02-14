@@ -2,39 +2,20 @@ import Spotify from 'spotify-web-api-js'
 // import uniq from 'lodash.uniq'
 // import flatten from 'lodash.flatten'
 // import chunk from 'lodash.chunk'
-
+const API_URL = 'https://api.spotify.com/v1'
 const spotifyApi = new Spotify()
 
 //waiting for the API to be fixed so can't use spotify-web-api-js library
 //for playlist stuff. Creating this global variable to hold the accessToken
 //and use it manually for our temporary playlist function. Once the JMPerez library
 //is fixed then can go back to just using it.
-//Playlist API issues: https://developer.spotify.com/community/news/2018/06/12/changes-to-playlist-uris/
+
 let globalAccessToken = ''
 export async function getMe() {
   const user = await spotifyApi.getMe()
   return user
 }
 export function redirectUrlToSpotifyForLogin() {
-  // const CLIENT_ID = '2bb803854dae4494a2598e2fab28a489'
-  // const REDIRECT_URI = 'http://localhost:3000/callback'
-  // const scopes = [
-  // 	"user-modify-playback-state",
-  // 	"user-library-read",
-  // 	"user-library-modify",
-  // 	"playlist-read-private",
-  // 	"playlist-modify-public",
-  // 	"playlist-modify-private"
-  // ];
-  // return (
-  // 	"https://accounts.spotify.com/authorize?client_id=" +
-  // 	CLIENT_ID +
-  // 	"&redirect_uri=" +
-  // 	encodeURIComponent(REDIRECT_URI) +
-  // 	"&scope=" +
-  // 	encodeURIComponent(scopes.join(" ")) +
-  // 	"&response_type=token"
-  // );
   return 'http://localhost:3001/login'
 }
 
@@ -57,25 +38,79 @@ export function setAccessToken(accessToken) {
   globalAccessToken = accessToken
 }
 
-// export async function getUserPlaylists() {
-//   //returns an array of objects with playlist name (like "Favorite Smashing Pumpkins jamz")
-//   //and the id of the playlist. Use this to feed the playlists selection list
-//   try {
-//     const playlistsResponse = await spotifyApi.getUserPlaylists()
-//     //playlistsResponse.items are the actual playlist objects
-//     const playlists = playlistsResponse.items.map(playlistObject => {
-//       const { id, name } = playlistObject
-//       return { id: id, playlistName: name }
-//     })
-//     return playlists
-//   } catch (err) {
-//     //return default array with note that can't download playlists
-//     console.error('Error: Attempting to get user playlists', err)
-//     console.error(err.stack)
-//     return [{ id: null, playlistName: "Can't Download your Playlists!" }]
-//   }
-// }
+export function savePlaylist(token, name, trackUris) {
+  if (!name || !trackUris.length) {
+    return
+  }
 
+  const accessToken = token
+  spotifyApi.setAccessToken(token)
+  const headers = { Authorization: `Bearer ${accessToken}` }
+  let userId
+
+  // spotifyApi
+  //   .me()
+  spotifyApi.me().then(jsonRes => {
+    let userId = jsonRes.id
+    return fetch(`${API_URL}/users/${userId}/playlists`, {
+      headers: headers,
+      method: 'POST',
+      body: JSON.stringify({ name: name })
+    })
+      .then(res => res.json())
+      .then(jsonRes => {
+        const playlistId = jsonRes.id
+        return fetch(
+          `${API_URL}/users/${userId}/playlists/${playlistId}/tracks`,
+          {
+            headers: headers,
+            method: 'POST',
+            body: JSON.stringify({ uris: trackUris })
+          }
+        )
+      })
+  })
+}
+
+export async function getUserPlaylists() {
+  //returns an array of objects with playlist name (like "Favorite Smashing Pumpkins jamz")
+  //and the id of the playlist. Use this to feed the playlists selection list
+  try {
+    const playlistsResponse = await spotifyApi.getUserPlaylists()
+    //playlistsResponse.items are the actual playlist objects
+    const playlists = playlistsResponse.items.map(playlistObject => {
+      const { id, name } = playlistObject
+      return { id: id, playlistName: name }
+    })
+    return playlists
+  } catch (err) {
+    //return default array with note that can't download playlists
+    console.error('Error: Attempting to get user playlists', err)
+    console.error(err.stack)
+    return [{ id: null, playlistName: "Can't Download your Playlists!" }]
+  }
+}
+export function search(query, accessToken) {
+  return fetch(`${API_URL}/search?type=track&q=${query}`, {
+    headers: { Authorization: `Bearer ${accessToken}` }
+  })
+    .then(res => res.json())
+    .then(jsonRes => {
+      if (!jsonRes.tracks) {
+        return []
+      } else {
+        return jsonRes.tracks.items.map(track => {
+          return {
+            id: track.id,
+            name: track.name,
+            artist: track.artists[0].name,
+            album: track.album.name,
+            uri: track.uri
+          }
+        })
+      }
+    })
+}
 // async function getSimplePlaylistTracks(playlistId) {
 //   //track_number is what track number a song is on the album
 //   try {

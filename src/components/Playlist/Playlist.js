@@ -19,6 +19,7 @@ class Playlist extends Component {
           tracks={this.props.tracks}
           isRemoved={true}
           onRemove={this.props.onRemove}
+          onPlay={this.props.onPlay}
         />
         <a className="Playlist-save" onClick={this.props.onSave}>
           SAVE TO SPOTIFY

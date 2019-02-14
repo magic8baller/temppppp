@@ -11,7 +11,8 @@ const routing = (
       {' '}
       <Link to="/profile">Profile</Link>
       {'               '}
-      <Link to="/">Home</Link> <a href="https://open.spotify.com/">Spotify</a>
+      <Link to="/">Home</Link>{' '}
+      <a href="https://open.spotify.com/collection/playlists">Spotify</a>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/profile" component={App} />
