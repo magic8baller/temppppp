@@ -4,7 +4,7 @@ let accessToken
 
 const API_URL = 'https://api.spotify.com/v1'
 
-const Spotify = {
+const Spot = {
   getAccessToken() {
     if (accessToken) {
       return accessToken
@@ -25,7 +25,7 @@ const Spotify = {
   },
   //current user
   getUserInfo() {
-    const accessToken = Spotify.getAccessToken()
+    const accessToken = Spot.getAccessToken()
     let user
     return fetch(`${API_URL}/me`, {
       headers: { Authorization: `Bearer ${accessToken}` }
@@ -44,7 +44,7 @@ const Spotify = {
   },
 
   search(query) {
-    const accessToken = Spotify.getAccessToken()
+    const accessToken = Spot.getAccessToken()
 
     return fetch(`${API_URL}/search?type=track&q=${query}`, {
       headers: { Authorization: `Bearer ${accessToken}` }
@@ -72,7 +72,7 @@ const Spotify = {
       return
     }
 
-    const accessToken = Spotify.getAccessToken()
+    const accessToken = Spot.getAccessToken()
     const headers = { Authorization: `Bearer ${accessToken}` }
     let userId
 
@@ -101,4 +101,4 @@ const Spotify = {
   }
 }
 
-export default Spotify
+export default Spot

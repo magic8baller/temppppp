@@ -24,12 +24,12 @@
 .Playlist-save {
   cursor: pointer;
   width: 10rem;
-  padding: 0.77rem 0;
+  padding: 1rem 0.7rem;
   border-radius: 54px;
   margin-top: 1.27rem;
   background-color: #2135a7;
   text-align: center;
-  font-size: 0.83rem;
+  font-size: 1.5rem;
   transition: background-color 0.25s;
 }
 

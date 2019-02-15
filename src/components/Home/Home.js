@@ -1,39 +1,49 @@
-import React, { Component } from 'react'
+// import React, { Component } from 'react'
 
-export default class Home extends Component {
-  render() {
-    const { id, display_name, image, href } = this.props
-    console.log('props are', this.props)
-    return (
-      <div>
-        <h2>{`Logged in as ${display_name}`}</h2>
-        <div className="user-content">
-          <img src={image} alt={image} />
-          <ul>
-            <li>
-              <span>Display name</span>
-              <span>{display_name}</span>
-            </li>
-            <li>
-              <span>Id</span>
-              <span>{id}</span>
-            </li>
+// import Paper from '@material-ui/core/Paper'
+// import ConnectSpotify from '../ConnectSpotify'
 
-            <li>
-              <span>Link</span>
-              <span>
-                <a href={href}>{href}</a>
-              </span>
-            </li>
-            <li>
-              <span>Profile Image</span>
-              <span>
-                <a href={image}>{image}</a>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    )
-  }
-}
+// import * as SpotifyFunctions from '../spotifyFunctions'
+// import App from '../App/App'
+
+// import Spotify from 'spotify-web-api-js'
+
+// const spotifyApi = new Spotify()
+// class SpotifyContainer extends Component {
+//   state = {
+//     loggedInToSpotify: false,
+//     accessToken: null
+//   }
+
+//   componentDidMount() {
+//     const accessToken = SpotifyFunctions.checkUrlForSpotifyAccessToken()
+//     if (accessToken) {
+//       this.setState({ loggedInToSpotify: true, accessToken: accessToken })
+//     } else {
+//       this.setState({ loggedInToSpotify: false, accessToken: null })
+//     }
+//   }
+
+//   handleLogOut = () => {
+//     window.location = 'https://www.spotify.com/logout/'
+//     window.location = 'http://localhost:3001/home'
+//   }
+
+//   render() {
+//     return (
+//       <div className="SpotifyContainer">
+//         <div>
+//           {!this.state.loggedInToSpotify ? (
+//             <ConnectSpotify />
+//           ) : (
+//             <>
+//               <App accessToken={this.state.accessToken} />
+//             </>
+//           )}
+//         </div>
+//       </div>
+//     )
+//   }
+// }
+
+// export default SpotifyContainer

@@ -23,6 +23,18 @@ class Playlist extends Component {
         <a className="Playlist-save" onClick={this.props.onSave}>
           SAVE TO SPOTIFY
         </a>
+        <br />
+        <br />
+        <br />
+        <br />
+        <a
+          className="Playlist-save"
+          href="https://open.spotify.com/collection/playlists"
+          target="_blank"
+          style={{ backgroundColor: 'green' }}
+        >
+          CHECK OUT YOUR PLAYLIST ON SPOTIFY
+        </a>
       </div>
     )
   }

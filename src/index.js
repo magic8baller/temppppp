@@ -9,19 +9,13 @@ import Home from '../src/components/Home/Home'
 const routing = (
   <Router>
     <div>
-      <ul>
-        <li>
-          {' '}
-          <Link to="/profile">Profile</Link>
-        </li>
-        <li>
-          {' '}
-          <Link to="/">Home</Link>
-        </li>
-
-        <li>Spotify</li>
-      </ul>
-
+      {' '}
+      <Link to="/profile">Profile</Link>
+      ..|||.. <Link to="/">Home</Link>
+      ..|||..
+      <a href="https://open.spotify.com/collection/playlists">Spotify</a>
+      ..|||..
+      <a href="window.location='http://www.spotify.com/logout'">LogOut</a>
       <Switch>
         <Route exact path="/" component={App} />
         <Route path="/profile" component={Home} />

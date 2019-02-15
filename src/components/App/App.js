@@ -1,21 +1,35 @@
 import React, { Component } from 'react'
 import './App.css'
 
-import Spotify from '../../services/Spotify'
+import Spot from '../../services/Spotify'
 import SearchBar from '../SearchBar/SearchBar'
 import SearchResults from '../SearchResults/SearchResults'
 import Playlist from '../Playlist/Playlist'
 import Home from '../Home/Home'
+import Spotify from 'spotify-web-api-js'
 
-const currentUser = Spotify.getUserInfo()
+const spotifyApi = new Spotify()
+const currentUser = Spot.getUserInfo()
 class App extends Component {
   state = {
     searchResults: [],
     playlistName: 'My New Playlist',
     playlistTracks: [],
-    currentUser: null
+    currentUser: {}
   }
-
+  async componentDidMount() {
+    await spotifyApi.setAccessToken(this.props.accessToken)
+    await spotifyApi.getMe().then(currentUser => {
+      this.setState({
+        currentUser: {
+          username: currentUser.display_name,
+          avatar: currentUser.images[0].url,
+          href: currentUser.href,
+          accessToken: this.props.accessToken
+        }
+      })
+    })
+  }
   addTrack = track => {
     if (
       !this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)
@@ -38,32 +52,37 @@ class App extends Component {
 
   savePlaylist = () => {
     const trackUris = this.state.playlistTracks.map(track => track.uri)
-    Spotify.savePlaylist(this.state.playlistName, trackUris).then(() => {
+    Spot.savePlaylist(this.state.playlistName, trackUris).then(() => {
       this.setState({
-        playlistName: 'My New Playlist',
+        playlistName: 'mY NEW pLaylist',
         playlistTracks: []
       })
     })
   }
 
   search = term => {
-    Spotify.search(term).then(searchResults => {
+    Spot.search(term).then(searchResults => {
       this.setState({ searchResults })
     })
   }
 
-  currentUser = () => {
-    this.setState({ currentUser })
-  }
+  // currentUser = () => {
+  //   this.setState({ currentUser })
+  // }
 
   render() {
+    const { username, avatar, href } = this.state.currentUser
     return (
       <div>
-        <h1>spottifrenz</h1>
+        <div className="clearfix">
+          <h1>
+            <span>
+              <img className="avatar" src={avatar} width="60" height="60" />
+            </span>
+          </h1>
+        </div>
+        <h1>spotify playlist generator</h1>
         <div className="App">
-          <button>
-            <a href={Home}>view profile!</a>
-          </button>
           <SearchBar onSearch={this.search} />
           <div className="App-playlist">
             <SearchResults
